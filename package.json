@@ -1,7 +1,7 @@
 {
   "name": "rest-api-2.0",
   "version": "1.0.0",
-  "description": "",
+  "description": "task",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
@@ -19,8 +19,13 @@
   },
   "homepage": "https://github.com/e1essar/REST-API-2.0#readme",
   "dependencies": {
-    "express": "^4.18.1",
-    "pg": "^8.8.0"
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.3.3",
+    "pg": "^8.8.0",
+    "sequelize": "^6.25.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
