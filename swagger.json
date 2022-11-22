@@ -1,59 +1,66 @@
 {
-    "swagger": "2.0",
-    "info": {
-      "version": "1.0.0", 
-      "title": "REST API",
-      "description": "REST API",
-      "license": {
-        "name": "MIT",
-        "url": "https://opensource.org/licenses/MIT"
-      }
-    },
-    "host": "localhost:8080",
-    "basePath": "/",
-    "tags": [
-      {
-        "name": "Users",
-        "description": "API for users in the system"
-      }
-    ],
-    "schemes": ["http"],
-    "consumes": ["application/json"],
-    "produces": ["application/json"],
-        "paths": {
-          "/api/test/users": {
-            "get": {
-              "tags": ["Users"],
-              "summary": "Get all users in system",
-              "responses": {
-                "200": {
-                  "description": "OK",
-                  "schema": {
-                    "$ref": "#/definitions/Users"
-                  }
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0", 
+    "title": "REST API",
+    "description": "REST API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:8080",
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "Users",
+      "description": "API for users in the system"
+    }
+  ],
+  "schemes": ["http"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+      "paths": {
+        "/api/test/users": {
+          "get": {
+            "tags": ["Users"],
+            "summary": "Get all users in system",
+            "security": {
+              "accessToken": ["token"]
+            },
+            "responses": {
+              "200": {
+                "description": "OK",
+                "schema": {
+                  "$ref": "#/definitions/Users"
                 }
               }
             }
           }
         },
-        "definitions": {
-          "User": {
-            "required": ["name", "_id"],
-            "properties": {
-              "_id": {
-                "type": "integer",
-                "uniqueItems": true
-              },
-              "name": {
-                "type": "string"
-              }
-            }
-          },
-          "Users": {
-            "type": "array",
-            "$ref": "#/definitions/User"
+        "/api/auth/signup": {
+          "post": {
+            
           }
         }
-    
+      },
+      "definitions": {
+        "User": {
+          "required": ["name", "_id"],
+          "properties": {
+            "_id": {
+              "type": "integer",
+              "uniqueItems": true
+            },
+            "name": {
+              "type": "string"
+            }
+          }
+        },
+        "Users": {
+          "type": "array",
+          "$ref": "#/definitions/User"
+        }
+      }
+  
 }
-

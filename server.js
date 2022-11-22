@@ -26,12 +26,17 @@ const Role = db.role;
 function initial() {
   Role.create({
     id: 1,
-    name: "user"
+    name: "admin"
   });
 
   Role.create({
     id: 2,
-    name: "admin"
+    name: "manager"
+  });
+
+  Role.create({
+    id: 3,
+    name: "collaborator"
   });
 }
 

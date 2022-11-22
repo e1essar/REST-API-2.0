@@ -8,31 +8,48 @@ const Op = db.Sequelize.Op;
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
-exports.signup = (req, res) => {
+exports.signupAdmin = (req, res) => {
   // Save User to Database
   User.create({
     username: req.body.username,
     password: bcrypt.hashSync(req.body.password, 8)
   })
     .then(user => {
-      if (req.body.roles) {
-        Role.findAll({
-          where: {
-            name: {
-              [Op.or]: req.body.roles
-            }
-          }
-        }).then(roles => {
-          user.setRoles(roles).then(() => {
-            res.send({ message: "User was registered successfully!" });
-          });
+        user.setRole([1]).then(() => {
+          res.status(200).send({ message: "Admin was registered successfully!" });
         });
-      } else {
-        // user role = 1
-        user.setRoles([1]).then(() => {
-          res.send({ message: "User was registered successfully!" });
+    })
+    .catch(err => {
+      res.status(500).send({ message: err.message });
+    });
+};
+
+exports.createManager = (req, res) => {
+  // Save User to Database
+  User.create({
+    username: req.body.username,
+    password: bcrypt.hashSync(req.body.password, 8)
+  })
+    .then(user => {
+        user.setRole([2]).then(() => {
+          res.status(200).send({ message: "Manager was created successfully!" });
         });
-      }
+    })
+    .catch(err => {
+      res.status(500).send({ message: err.message });
+    });
+};
+
+exports.createCollaborator = (req, res) => {
+  // Save User to Database
+  User.create({
+    username: req.body.username,
+    password: bcrypt.hashSync(req.body.password, 8)
+  })
+    .then(user => {
+        user.setRole([3]).then(() => {
+          res.status(200).send({ message: "Collaborator was created successfully!" });
+        });
     })
     .catch(err => {
       res.status(500).send({ message: err.message });
@@ -67,10 +84,8 @@ exports.signin = (req, res) => {
       });
 
       var authorities = [];
-      user.getRoles().then(roles => {
-        for (let i = 0; i < roles.length; i++) {
-          authorities.push("ROLE_" + roles[i].name.toUpperCase());
-        }
+      user.getRole().then(roles => {
+          authorities.push("ROLE_" + roles.name.toUpperCase());
         res.status(200).send({
           id: user.id,
           username: user.username,

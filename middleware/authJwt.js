@@ -25,12 +25,10 @@ verifyToken = (req, res, next) => {
 
 isAdmin = (req, res, next) => {
   User.findByPk(req.userId).then(user => {
-    user.getRoles().then(roles => {
-      for (let i = 0; i < roles.length; i++) {
-        if (roles[i].name === "admin") {
+    user.getRole().then(roles => {
+        if (roles.name === "admin") {
           next();
           return;
-        }
       }
 
       res.status(403).send({
@@ -43,6 +41,6 @@ isAdmin = (req, res, next) => {
 
 const authJwt = {
   verifyToken: verifyToken,
-  isAdmin: isAdmin,
+  isAdmin: isAdmin
 };
 module.exports = authJwt;
