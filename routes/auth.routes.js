@@ -19,7 +19,7 @@ module.exports = function(app) {
   );
 
   app.post(
-    "/api/auth/createmanager",
+    "/api/auth/create/manager",
     [
       verifySignUp.checkDuplicateUsername,
       authJwt.verifyToken,
@@ -29,9 +29,11 @@ module.exports = function(app) {
   );
 
   app.post(
-    "/api/auth/createcollaborator",
+    "/api/auth/create/collaborator",
     [
       verifySignUp.checkDuplicateUsername,
+      authJwt.verifyToken,
+      authJwt.isManager
     ],
     controller.createCollaborator
   );

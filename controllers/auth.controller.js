@@ -2,6 +2,7 @@ const db = require("../models");
 const config = require("../config/auth.config");
 const User = db.user;
 const Role = db.role;
+const Task = db.task;
 
 const Op = db.Sequelize.Op;
 
@@ -97,4 +98,13 @@ exports.signin = (req, res) => {
     .catch(err => {
       res.status(500).send({ message: err.message });
     });
+};
+
+exports.createTask = (req, res) => {
+  // Save Task to Database
+  Task.create({
+    title: req.body.title,
+    assign: req.body.assign, // how to put id of the collaborator and check is it Collaborator
+    creator: req.body.creator // how to pass id from table using token(header)
+  })
 };
