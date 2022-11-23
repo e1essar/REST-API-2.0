@@ -33,6 +33,12 @@ db.user.belongsTo(db.role, {
   as: "role",
 });
 
+db.user.hasMany(db.task, { as: "tasks" }), 
+db.task.belongsTo(db.user, {
+  foreignKey: "userId",
+  as: "user",
+});
+
 db.ROLES = ["admin", "manager", "collaborator"];
 
 module.exports = db;

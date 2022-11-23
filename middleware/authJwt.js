@@ -39,8 +39,25 @@ isAdmin = (req, res, next) => {
   });
 };
 
+isManager = (req, res, next) => {
+  User.findByPk(req.userId).then(user => {
+    user.getRole().then(roles => {
+        if (roles.name === "manager") {
+          next();
+          return;
+      }
+
+      res.status(403).send({
+        message: "Require Manager Role!"
+      });
+      return;
+    });
+  });
+};
+
 const authJwt = {
   verifyToken: verifyToken,
-  isAdmin: isAdmin
+  isAdmin: isAdmin,
+  isManager: isManager
 };
 module.exports = authJwt;
